@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Stella Mundi"
+description = "A refined public website for Stella Mundi, presenting its Church-anchored value chain, projects, partners, and partner readiness journey across East and Southern Africa."
+version = "1.0.0"
+id = "artifacts/stella-mundi"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18280
+
+[services.development]
+run = "pnpm --filter @workspace/stella-mundi run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/stella-mundi", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/stella-mundi/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18280"
+BASE_PATH = "/"
